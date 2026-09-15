@@ -1,495 +1,685 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>给你的一封信</title>
+<title>给你的一封信</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 18px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #f7f4ee;
+        color: #222;
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Noto Sans SC",
+            "Microsoft YaHei",
+            "PingFang SC",
+            sans-serif;
+    }
+
+    .page {
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 48px 28px 80px;
+    }
+
+    /* =========================
+       标题
+    ========================= */
+
+    .title {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 32px;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.8;
+        color: #666;
+        margin-bottom: 36px;
+    }
+
+    /* =========================
+       播放区域
+    ========================= */
+
+    .player {
+        text-align: center;
+        margin-bottom: 42px;
+    }
+
+    .play-button {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: none;
+        background: #222;
+        color: white;
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 42px;
+
+        transition: transform 0.15s ease;
+    }
+
+    .play-button:hover {
+        transform: scale(1.04);
+    }
+
+    .play-button:active {
+        transform: scale(0.97);
+    }
+
+    .play-button:focus-visible {
+        outline: 4px solid #888;
+        outline-offset: 6px;
+    }
+
+    .play-icon {
+        margin-left: 7px;
+        margin-top: 2px;
+    }
+
+    .pause-icon {
+        margin-left: 0;
+    }
+
+    .time {
+        margin-top: 18px;
+        font-size: 18px;
+        color: #555;
+        letter-spacing: 1px;
+    }
+
+    /* =========================
+       进度条
+    ========================= */
+
+    .progress-container {
+        width: 100%;
+        max-width: 620px;
+        height: 12px;
+        margin: 20px auto 0;
+        background: #ddd8cf;
+        border-radius: 20px;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .progress {
+        width: 0%;
+        height: 100%;
+        background: #333;
+        border-radius: 20px;
+    }
+
+    /* =========================
+       分隔线
+    ========================= */
+
+    .divider {
+        width: 100%;
+        height: 1px;
+        background: #d8d2c8;
+        margin-bottom: 42px;
+    }
+
+    /* =========================
+       信件区域
+    ========================= */
+
+    .letter {
+        font-size: 28px;
+        line-height: 2.05;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+
+    .sentence {
+        margin: 0 0 28px;
+    }
+
+    /* =========================
+       播放模式
+    ========================= */
+
+    .listening-mode {
+        display: none;
+    }
+
+    .listening-mode.active {
+        display: block;
+    }
+
+    .listening-sentence {
+        font-size: 30px;
+        line-height: 2;
+        margin-bottom: 30px;
+
+        animation: appear 0.35s ease;
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
         }
 
-        body {
-            margin: 0;
-            background: #f7f4ee;
-            color: #222222;
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "PingFang SC",
-                "Hiragino Sans GB",
-                "Microsoft YaHei",
-                sans-serif;
-            line-height: 1.9;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
+
+    /* =========================
+       手机端
+    ========================= */
+
+    @media (max-width: 600px) {
 
         .page {
-            width: 100%;
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 48px 24px 80px;
+            padding: 36px 24px 70px;
         }
 
-        /* 顶部标题 */
-
-        .intro {
-            text-align: center;
-            margin-bottom: 36px;
-        }
-
-        .intro h1 {
-            margin: 0 0 12px;
+        .title {
             font-size: 30px;
-            font-weight: 600;
-            letter-spacing: 2px;
         }
 
-        .intro p {
-            margin: 0;
-            font-size: 17px;
-            color: #555555;
-        }
-
-        /* 播放器 */
-
-        .player {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 32px 24px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            margin-bottom: 42px;
-        }
-
-        .player-label {
-            font-size: 16px;
-            color: #666666;
-            margin-bottom: 20px;
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 32px;
         }
 
         .play-button {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: none;
-            background: #222222;
-            color: #ffffff;
+            width: 125px;
+            height: 125px;
             font-size: 44px;
-            line-height: 110px;
-            padding: 0;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .play-button:active {
-            transform: scale(0.94);
-        }
-
-        .play-button:focus-visible {
-            outline: 4px solid #999999;
-            outline-offset: 5px;
-        }
-
-        .play-text {
-            margin-top: 16px;
-            font-size: 18px;
-            font-weight: 500;
         }
 
         .time {
-            margin-top: 12px;
-            font-size: 15px;
-            color: #666666;
+            font-size: 18px;
         }
-
-        .progress {
-            width: 100%;
-            height: 8px;
-            margin-top: 22px;
-            border-radius: 10px;
-            background: #e6e3dd;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #222222;
-            transition: width 0.2s linear;
-        }
-
-        /* 信件 */
 
         .letter {
-            background: #fffefa;
-            border-radius: 16px;
-            padding: 42px 34px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
-        }
-
-        .letter-title {
-            margin: 0 0 30px;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .letter-content {
-            font-size: 19px;
+            font-size: 30px;
             line-height: 2.15;
+            letter-spacing: 1px;
         }
 
         .sentence {
-            display: inline;
-            padding: 2px 3px;
-            border-radius: 5px;
-            transition:
-                background-color 0.3s ease,
-                color 0.3s ease;
+            margin-bottom: 32px;
         }
 
-        /* 当前正在播放的句子 */
-
-        .sentence.active {
-            background: #ebe5d9;
-            color: #111111;
+        .listening-sentence {
+            font-size: 32px;
+            line-height: 2.1;
+            margin-bottom: 32px;
         }
+    }
 
-        .signature {
-            margin-top: 42px;
-            text-align: right;
-            font-size: 18px;
-            line-height: 1.8;
+    /* =========================
+       减少动画
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation: none !important;
+            transition: none !important;
         }
-
-        .bottom-note {
-            margin-top: 32px;
-            text-align: center;
-            font-size: 14px;
-            color: #777777;
-        }
-
-        /* 手机 */
-
-        @media (max-width: 600px) {
-            .page {
-                padding: 32px 16px 60px;
-            }
-
-            .intro h1 {
-                font-size: 27px;
-            }
-
-            .intro p {
-                font-size: 16px;
-            }
-
-            .player {
-                padding: 28px 20px;
-            }
-
-            .play-button {
-                width: 120px;
-                height: 120px;
-                font-size: 48px;
-            }
-
-            .letter {
-                padding: 32px 24px;
-            }
-
-            .letter-content {
-                font-size: 19px;
-                line-height: 2.1;
-            }
-        }
-
-        /* 减少动态效果：无障碍友好 */
-
-        @media (prefers-reduced-motion: reduce) {
-            .play-button,
-            .sentence,
-            .progress-bar {
-                transition: none;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
 <div class="page">
 
-    <!-- 顶部 -->
+    <!-- 标题 -->
 
-    <header class="intro">
-        <h1>给你的一封信</h1>
-        <p>有些话，我还是想亲口告诉你。</p>
-    </header>
+    <h1 class="title">给你的一封信</h1>
+
+    <div class="subtitle">
+        有些话，我还是想亲口告诉你。
+    </div>
 
 
     <!-- 播放器 -->
 
-    <section class="player" aria-label="录音播放器">
-
-        <div class="player-label">
-            这是一段我想让你听见的话
-        </div>
+    <div class="player">
 
         <button
             class="play-button"
             id="playButton"
             aria-label="播放录音"
-            type="button"
         >
-            ▶
+            <span id="playIcon" class="play-icon">▶</span>
         </button>
 
-        <div class="play-text" id="playText">
-            播放录音
-        </div>
-
-        <div class="time" id="time">
-            00:00 / 00:00
+        <div class="time">
+            <span id="currentTime">0:00</span>
+            /
+            <span id="duration">0:00</span>
         </div>
 
         <div
-            class="progress"
-            aria-hidden="true"
+            class="progress-container"
+            id="progressContainer"
+            aria-label="音频播放进度"
         >
-            <div
-                class="progress-bar"
-                id="progressBar"
-            ></div>
+            <div class="progress" id="progress"></div>
         </div>
 
-        <!-- 真正的音频文件 -->
-
-        <audio
-            id="audio"
-            preload="metadata"
-        >
-            <source src="audio.mp3" type="audio/mpeg">
-            你的浏览器不支持音频播放。
-        </audio>
-
-    </section>
-
-
-    <!-- 信件 -->
-
-    <article class="letter">
-
-        <h2 class="letter-title">给你：</h2>
-
-        <div class="letter-content" id="letterContent">
-
-            <!--
-                这里以后替换成你的真实信件。
-
-                每一句话用一个 span 包起来：
-                <span class="sentence" data-start="0" data-end="5">
-                    这里是一句话。
-                </span>
-
-                data-start = 这句话开始播放的秒数
-                data-end   = 这句话结束播放的秒数
-
-                例如：
-                录音 00:00 - 00:05 是第一句话
-                就写：
-                data-start="0" data-end="5"
-            -->
-
-            <span class="sentence" data-start="0" data-end="5">
-                前几天，我突然梦见了你。
-            </span>
-
-            <span class="sentence" data-start="5" data-end="11">
-                醒来以后，我想了很久。
-            </span>
-
-            <span class="sentence" data-start="11" data-end="18">
-                有些事情，我一直觉得应该和你说清楚。
-            </span>
-
-            <span class="sentence" data-start="18" data-end="25">
-                所以我写了这封信，也录下了这些话。
-            </span>
-
-            <span class="sentence" data-start="25" data-end="32">
-                我不知道你看到这些，或者听到这些的时候，会是什么感觉。
-            </span>
-
-            <span class="sentence" data-start="32" data-end="40">
-                但我还是希望，你愿意听我把这些话说完。
-            </span>
-
-        </div>
-
-
-        <div class="signature">
-            <div>—— 写给你</div>
-        </div>
-
-    </article>
-
-
-    <div class="bottom-note">
-        愿你慢慢听，不着急。
     </div>
+
+
+    <div class="divider"></div>
+
+
+    <!-- =========================
+         播放前：完整信件
+    ========================== -->
+
+    <div id="fullLetter" class="letter">
+
+        <p class="sentence">
+            亲爱的，
+        </p>
+
+        <p class="sentence">
+            我有一些话想告诉你。
+        </p>
+
+        <p class="sentence">
+            这些话，我想了很久。
+        </p>
+
+        <p class="sentence">
+            我不知道应该从哪里开始说起，
+            但我还是想把它们告诉你。
+        </p>
+
+        <p class="sentence">
+            有些事情过去了很久，
+            我也慢慢想明白了一些。
+        </p>
+
+        <p class="sentence">
+            所以最后，我还是决定写下这封信。
+        </p>
+
+        <p class="sentence">
+            希望你能够听到。
+        </p>
+
+        <p class="sentence">
+            也希望你能够明白我的意思。
+        </p>
+
+        <p class="sentence">
+            就这样。
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         播放中：逐句出现
+    ========================== -->
+
+    <div id="listeningLetter" class="listening-mode letter">
+
+        <!--
+        data-start = 这一句开始播放的秒数
+        data-end   = 下一句开始播放前的秒数
+
+        下面只是测试时间。
+        等最终录音确定以后，再重新调整。
+        -->
+
+        <p
+            class="listening-sentence"
+            data-start="0"
+            data-end="4"
+        >
+            亲爱的，
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="4"
+            data-end="9"
+        >
+            我有一些话想告诉你。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="9"
+            data-end="15"
+        >
+            这些话，我想了很久。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="15"
+            data-end="24"
+        >
+            我不知道应该从哪里开始说起，
+            但我还是想把它们告诉你。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="24"
+            data-end="34"
+        >
+            有些事情过去了很久，
+            我也慢慢想明白了一些。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="34"
+            data-end="42"
+        >
+            所以最后，我还是决定写下这封信。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="42"
+            data-end="47"
+        >
+            希望你能够听到。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="47"
+            data-end="53"
+        >
+            也希望你能够明白我的意思。
+        </p>
+
+        <p
+            class="listening-sentence"
+            data-start="53"
+            data-end="57"
+        >
+            就这样。
+        </p>
+
+    </div>
+
+
+    <!-- 音频 -->
+
+    <audio id="audio" preload="metadata">
+        <source src="audio.mp3" type="audio/mpeg">
+        你的浏览器不支持音频播放。
+    </audio>
 
 </div>
 
 
 <script>
 
-    const audio = document.getElementById("audio");
-    const playButton = document.getElementById("playButton");
-    const playText = document.getElementById("playText");
-    const timeDisplay = document.getElementById("time");
-    const progressBar = document.getElementById("progressBar");
+const audio = document.getElementById("audio");
 
-    const sentences = document.querySelectorAll(".sentence");
+const playButton = document.getElementById("playButton");
+const playIcon = document.getElementById("playIcon");
+
+const currentTimeText = document.getElementById("currentTime");
+const durationText = document.getElementById("duration");
+
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progressContainer");
+
+const fullLetter = document.getElementById("fullLetter");
+const listeningLetter = document.getElementById("listeningLetter");
+
+const sentences = document.querySelectorAll(".listening-sentence");
 
 
-    // 格式化时间
+/* =========================
+   时间格式
+========================= */
 
-    function formatTime(seconds) {
+function formatTime(seconds) {
 
-        if (!isFinite(seconds)) {
-            return "00:00";
-        }
+    if (isNaN(seconds)) {
+        return "0:00";
+    }
 
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
+    const minutes = Math.floor(seconds / 60);
 
-        return String(minutes).padStart(2, "0")
-            + ":"
-            + String(secs).padStart(2, "0");
+    const remainingSeconds = Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+
+    return minutes + ":" + remainingSeconds;
+}
+
+
+/* =========================
+   音频加载完成
+========================= */
+
+audio.addEventListener("loadedmetadata", function() {
+
+    durationText.textContent =
+        formatTime(audio.duration);
+
+});
+
+
+/* =========================
+   播放 / 暂停
+========================= */
+
+playButton.addEventListener("click", function() {
+
+    if (audio.paused) {
+
+        audio.play();
+
+        fullLetter.style.display = "none";
+        listeningLetter.classList.add("active");
+
+    } else {
+
+        audio.pause();
+
+    }
+
+});
+
+
+/* =========================
+   播放状态
+========================= */
+
+audio.addEventListener("play", function() {
+
+    playIcon.textContent = "Ⅱ";
+    playIcon.classList.add("pause-icon");
+
+    playButton.setAttribute(
+        "aria-label",
+        "暂停录音"
+    );
+
+});
+
+
+audio.addEventListener("pause", function() {
+
+    playIcon.textContent = "▶";
+    playIcon.classList.remove("pause-icon");
+
+    playButton.setAttribute(
+        "aria-label",
+        "播放录音"
+    );
+
+});
+
+
+/* =========================
+   播放进度
+========================= */
+
+audio.addEventListener("timeupdate", function() {
+
+    const current = audio.currentTime;
+
+    const duration = audio.duration;
+
+    currentTimeText.textContent =
+        formatTime(current);
+
+    if (!isNaN(duration) && duration > 0) {
+
+        const percent =
+            (current / duration) * 100;
+
+        progress.style.width =
+            percent + "%";
+
     }
 
 
-    // 播放 / 暂停
+    /* =========================
+       控制逐句显示
+    ========================= */
 
-    playButton.addEventListener("click", function () {
+    sentences.forEach(function(sentence) {
 
-        if (audio.paused) {
+        const start =
+            parseFloat(sentence.dataset.start);
 
-            audio.play();
+        const end =
+            parseFloat(sentence.dataset.end);
 
-        } else {
+        if (
+            current >= start &&
+            current < end
+        ) {
 
-            audio.pause();
-
-        }
-
-    });
-
-
-    // 开始播放
-
-    audio.addEventListener("play", function () {
-
-        playButton.textContent = "Ⅱ";
-        playButton.setAttribute("aria-label", "暂停录音");
-        playText.textContent = "暂停播放";
-
-    });
-
-
-    // 暂停
-
-    audio.addEventListener("pause", function () {
-
-        playButton.textContent = "▶";
-        playButton.setAttribute("aria-label", "播放录音");
-        playText.textContent = "继续播放";
-
-    });
-
-
-    // 音频加载完成
-
-    audio.addEventListener("loadedmetadata", function () {
-
-        timeDisplay.textContent =
-            "00:00 / " + formatTime(audio.duration);
-
-    });
-
-
-    // 播放过程中
-
-    audio.addEventListener("timeupdate", function () {
-
-        const current = audio.currentTime;
-        const duration = audio.duration;
-
-        if (duration) {
-
-            const percent = (current / duration) * 100;
-
-            progressBar.style.width = percent + "%";
+            sentence.style.display = "block";
 
         }
 
-        timeDisplay.textContent =
-            formatTime(current)
-            + " / "
-            + formatTime(duration);
+    });
+
+});
 
 
-        // 判断当前应该高亮哪一句
+/* =========================
+   点击进度条跳转
+========================= */
 
-        sentences.forEach(function (sentence) {
+progressContainer.addEventListener(
+    "click",
+    function(event) {
 
-            const start = parseFloat(sentence.dataset.start);
-            const end = parseFloat(sentence.dataset.end);
+        if (!audio.duration) {
+            return;
+        }
 
-            if (
-                current >= start &&
-                current < end
-            ) {
+        const rect =
+            progressContainer.getBoundingClientRect();
 
-                sentence.classList.add("active");
+        const clickPosition =
+            event.clientX - rect.left;
 
-            } else {
+        const percentage =
+            clickPosition / rect.width;
 
-                sentence.classList.remove("active");
+        audio.currentTime =
+            percentage * audio.duration;
 
-            }
+    }
+);
 
-        });
+
+/* =========================
+   音频播放结束
+========================= */
+
+audio.addEventListener("ended", function() {
+
+    /*
+       回到最开始的完整信件
+    */
+
+    listeningLetter.classList.remove("active");
+
+    fullLetter.style.display = "block";
+
+
+    /*
+       把逐句模式重新隐藏，
+       这样下一次播放时会重新从第一句出现
+    */
+
+    sentences.forEach(function(sentence) {
+
+        sentence.style.display = "none";
 
     });
 
 
-    // 播放结束
+    progress.style.width = "0%";
 
-    audio.addEventListener("ended", function () {
+    currentTimeText.textContent = "0:00";
 
-        playButton.textContent = "▶";
-        playButton.setAttribute("aria-label", "重新播放录音");
-        playText.textContent = "重新播放";
+    playIcon.textContent = "▶";
 
-        progressBar.style.width = "100%";
+    playIcon.classList.remove("pause-icon");
 
-        sentences.forEach(function (sentence) {
+    playButton.setAttribute(
+        "aria-label",
+        "播放录音"
+    );
 
-            sentence.classList.remove("active");
+});
 
-        });
 
-    });
+/* =========================
+   页面第一次加载时，
+   隐藏播放模式的所有句子
+========================= */
+
+sentences.forEach(function(sentence) {
+
+    sentence.style.display = "none";
+
+});
 
 </script>
 
 </body>
 </html>
-```
