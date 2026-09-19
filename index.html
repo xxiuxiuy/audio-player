@@ -105,6 +105,7 @@ function enterListening(){
   status.textContent='正在播放';
 }
 function restoreLetter(){
+  lastIdx=-2;
   document.body.classList.remove('playing');
   status.textContent='播放结束';
   listen.innerHTML='';
@@ -115,23 +116,49 @@ function restoreLetter(){
     listen.appendChild(p);
   });
 }
+let lastIdx=-2;
+let rafPending=false;
+let lastTime=-1;
+
 function update(){
-  const t=audio.currentTime;
-  const dur=audio.duration||377.16;
-  timeEl.textContent=fmt(t)+' / '+fmt(dur);
-  fill.style.width=Math.min(100,t/dur*100)+'%';
+  if(rafPending) return;
+  rafPending=true;
+  requestAnimationFrame(()=>{
+    rafPending=false;
 
-  let idx=-1;
-  for(let i=0;i<timeline.length;i++) if(t>=timeline[i].start) idx=i;
-  const ps=listen.children;
-  for(let i=0;i<ps.length;i++) ps[i].classList.toggle('current',i===idx);
+    const t=audio.currentTime;
+    const dur=audio.duration||377.16;
+    timeEl.textContent=fmt(t)+' / '+fmt(dur);
+    fill.style.width=Math.min(100,t/dur*100)+'%';
 
-  if(idx>=0 && idx<ps.length && Date.now()>manualScrollUntil){
-    const r=ps[idx].getBoundingClientRect();
-    const topSafe=window.innerHeight*.22, bottomSafe=window.innerHeight*.72;
-    if(r.top<topSafe || r.bottom>bottomSafe) ps[idx].scrollIntoView({behavior:'smooth',block:'center'});
-  }
+    let idx=-1;
+    for(let i=0;i<timeline.length;i++){
+      if(t>=timeline[i].start) idx=i;
+      else break;
+    }
+
+    const ps=listen.children;
+
+    // 只有真正进入下一句话时，才更新文字状态和自动滚动。
+    // 避免每次 timeupdate 都重复操作 68 个 DOM 节点。
+    if(idx!==lastIdx){
+      if(lastIdx>=0 && lastIdx<ps.length) ps[lastIdx].classList.remove('current');
+      if(idx>=0 && idx<ps.length) ps[idx].classList.add('current');
+      lastIdx=idx;
+
+      if(idx>=0 && idx<ps.length && Date.now()>manualScrollUntil){
+        const r=ps[idx].getBoundingClientRect();
+        const topSafe=window.innerHeight*.22, bottomSafe=window.innerHeight*.72;
+        if(r.top<topSafe || r.bottom>bottomSafe){
+          ps[idx].scrollIntoView({behavior:'smooth',block:'center'});
+        }
+      }
+    }
+
+    lastTime=t;
+  });
 }
+
 btn.addEventListener('click',()=>{
   if(audio.paused) audio.play(); else audio.pause();
 });
