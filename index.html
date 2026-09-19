@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>给杨德贝的一封信</title>
+<title>给你的一封信</title>
 
 <style>
     * {
@@ -23,9 +24,10 @@
         font-family:
             -apple-system,
             BlinkMacSystemFont,
-            "Noto Sans SC",
-            "Microsoft YaHei",
             "PingFang SC",
+            "Hiragino Sans GB",
+            "Microsoft YaHei",
+            "Noto Sans SC",
             sans-serif;
     }
 
@@ -33,7 +35,7 @@
         width: 100%;
         max-width: 760px;
         margin: 0 auto;
-        padding: 48px 28px 80px;
+        padding: 46px 28px 80px;
     }
 
     /* =========================
@@ -42,7 +44,7 @@
 
     .title {
         text-align: center;
-        margin-bottom: 10px;
+        margin: 0 0 10px;
         font-size: 32px;
         font-weight: 600;
         letter-spacing: 2px;
@@ -57,7 +59,7 @@
     }
 
     /* =========================
-       播放区域
+       播放器
     ========================= */
 
     .player {
@@ -71,7 +73,7 @@
         border-radius: 50%;
         border: none;
         background: #222;
-        color: white;
+        color: #fff;
         cursor: pointer;
 
         display: inline-flex;
@@ -146,7 +148,7 @@
     }
 
     /* =========================
-       信件区域
+       完整信件
     ========================= */
 
     .letter {
@@ -156,12 +158,12 @@
         font-weight: 400;
     }
 
-    .sentence {
-        margin: 0 0 28px;
+    .paragraph {
+        margin: 0 0 34px;
     }
 
     /* =========================
-       播放模式
+       聆听模式
     ========================= */
 
     .listening-mode {
@@ -174,8 +176,9 @@
 
     .listening-sentence {
         font-size: 30px;
-        line-height: 2;
-        margin-bottom: 30px;
+        line-height: 2.1;
+        letter-spacing: 1px;
+        margin: 0 0 30px;
 
         animation: appear 0.35s ease;
     }
@@ -227,8 +230,8 @@
             letter-spacing: 1px;
         }
 
-        .sentence {
-            margin-bottom: 32px;
+        .paragraph {
+            margin-bottom: 36px;
         }
 
         .listening-sentence {
@@ -238,10 +241,6 @@
         }
     }
 
-    /* =========================
-       减少动画
-    ========================= */
-
     @media (prefers-reduced-motion: reduce) {
         * {
             animation: none !important;
@@ -249,202 +248,133 @@
         }
     }
 </style>
+
 </head>
 
 <body>
 
 <div class="page">
 
-    <!-- 标题 -->
+```
+<!-- =========================
+     标题
+========================== -->
 
-    <h1 class="title">给你的一封信</h1>
+<h1 class="title">给你的一封信</h1>
 
-    <div class="subtitle">
-        有些话，我还是想亲口告诉你。
+<div class="subtitle">
+    有些话，我还是想亲口告诉你。
+</div>
+
+
+<!-- =========================
+     播放器
+========================== -->
+
+<div class="player">
+
+    <button
+        class="play-button"
+        id="playButton"
+        aria-label="播放录音"
+    >
+        <span id="playIcon" class="play-icon">▶</span>
+    </button>
+
+    <div class="time">
+        <span id="currentTime">0:00</span>
+        /
+        <span id="duration">0:00</span>
     </div>
 
-
-    <!-- 播放器 -->
-
-    <div class="player">
-
-        <button
-            class="play-button"
-            id="playButton"
-            aria-label="播放录音"
-        >
-            <span id="playIcon" class="play-icon">▶</span>
-        </button>
-
-        <div class="time">
-            <span id="currentTime">0:00</span>
-            /
-            <span id="duration">0:00</span>
-        </div>
-
-        <div
-            class="progress-container"
-            id="progressContainer"
-            aria-label="音频播放进度"
-        >
-            <div class="progress" id="progress"></div>
-        </div>
-
+    <div
+        class="progress-container"
+        id="progressContainer"
+        aria-label="音频播放进度"
+    >
+        <div class="progress" id="progress"></div>
     </div>
-
-
-    <div class="divider"></div>
-
-
-    <!-- =========================
-         播放前：完整信件
-    ========================== -->
-
-    <div id="fullLetter" class="letter">
-
-        <p class="sentence">
-            亲爱的，
-        </p>
-
-        <p class="sentence">
-            我有一些话想告诉你。
-        </p>
-
-        <p class="sentence">
-            这些话，我想了很久。
-        </p>
-
-        <p class="sentence">
-            我不知道应该从哪里开始说起，
-            但我还是想把它们告诉你。
-        </p>
-
-        <p class="sentence">
-            有些事情过去了很久，
-            我也慢慢想明白了一些。
-        </p>
-
-        <p class="sentence">
-            所以最后，我还是决定写下这封信。
-        </p>
-
-        <p class="sentence">
-            希望你能够听到。
-        </p>
-
-        <p class="sentence">
-            也希望你能够明白我的意思。
-        </p>
-
-        <p class="sentence">
-            就这样。
-        </p>
-
-    </div>
-
-
-    <!-- =========================
-         播放中：逐句出现
-    ========================== -->
-
-    <div id="listeningLetter" class="listening-mode letter">
-
-        <!--
-        data-start = 这一句开始播放的秒数
-        data-end   = 下一句开始播放前的秒数
-
-        下面只是测试时间。
-        等最终录音确定以后，再重新调整。
-        -->
-
-        <p
-            class="listening-sentence"
-            data-start="0"
-            data-end="4"
-        >
-            亲爱的，
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="4"
-            data-end="9"
-        >
-            我有一些话想告诉你。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="9"
-            data-end="15"
-        >
-            这些话，我想了很久。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="15"
-            data-end="24"
-        >
-            我不知道应该从哪里开始说起，
-            但我还是想把它们告诉你。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="24"
-            data-end="34"
-        >
-            有些事情过去了很久，
-            我也慢慢想明白了一些。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="34"
-            data-end="42"
-        >
-            所以最后，我还是决定写下这封信。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="42"
-            data-end="47"
-        >
-            希望你能够听到。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="47"
-            data-end="53"
-        >
-            也希望你能够明白我的意思。
-        </p>
-
-        <p
-            class="listening-sentence"
-            data-start="53"
-            data-end="57"
-        >
-            就这样。
-        </p>
-
-    </div>
-
-
-    <!-- 音频 -->
-
-    <audio id="audio" preload="metadata">
-        <source src="audio.mp3" type="audio/mpeg">
-        你的浏览器不支持音频播放。
-    </audio>
 
 </div>
 
 
+<div class="divider"></div>
+
+
+<!-- =========================
+     播放前：完整信件
+========================== -->
+
+<div id="fullLetter" class="letter">
+
+    <p class="paragraph">
+        最近过得怎么样？我想，我们的见面太匆忙了，没来得及回忆过去，也没机会聊聊未来。所以，我把见面时想说的话写了下来。考虑到你读起来可能不太方便，所以最终应该会做成一个录音，扫描二维码就能打开的形式。希望你不要把它当成诈骗信息，给扔了。
+    </p>
+
+    <p class="paragraph">
+        昨天突然梦到你了，这是我近几年第一次梦到熟悉的人，所以很想记录下来，并借此机会说一些心里话。在梦里我们是毕业后很久没见的状态，和现实中的我们一样。不知道现实里的你过得怎么样，生活是否顺利，有没有找到满意的工作，眼睛状况还好吗。但在梦里你过得并不好，因为咱俩一见面你就抱着我哭，像是要把积压在心里的委屈全都宣泄出来。在梦里你似乎是一个老师的角色，但教书的对象很调皮捣蛋，不服从管教，导致你每天的工作压力都很大。直到我醒来，都还觉得很恍惚，因为在梦里我见到你的第一句话就是“你最近还好吗？”，逼真得就像我会说的话。当然，我希望梦是反的，希望现实里的你过得还不错。
+    </p>
+
+    <p class="paragraph">
+        回想起来，我们已经有快半年没有联系了，这半年也没有刷到你的朋友圈，无法了解你的现状。我甚至在想，你是不是把我删除或拉黑了。但无论是删除拉黑，还是不再联系，我都接受。翻看我们最后一次聊天，当时的我没有换位思考你的情况。你说现在的工作不稳定，我也说最近找了新工作，还在试用期，也不稳定。那个时候，我下意识地把我们的情况当成了同一种，却忘了你每天要面对的困难可能比我多得多。我忽略了你可能比普通人更难找到工作，也更难在工作中表现得和其他同事一致。你每天需要付出更多的精力和心血才能赶上别人。也正因如此，我们对风险的承担能力是不一样的。对未来，你会更谨慎，更小心。翻看之前的聊天，发现你也有在长假的时候计划回来。但可能都因为种种原因取消了。
+    </p>
+
+    <p class="paragraph">
+        毕业后，我们的聊天逐渐转变为生活，少了一些学生时代纯粹的乐趣。遗憾的是，我现在已经想不起来我们某次聚会聊了什么，脑子里关于学生时代的记忆在逐渐淡化。记得我们每次高中或大学见面，总是会有很多说不完的话。印象里我们最后一次见面是24年8月，当时我去贵阳治耳朵，你还在贵阳上班。我们去吃了新疆菜，聊了两个多小时，越聊越嗨，菜都凉了。后面我就回家休养，直到25年2月，我来了成都。你也去了上海。不知不觉我们已经两年多没见过面了。我在想，会不会是因为我们少了能见面深入聊天的机会，才会让我们之间的距离开始变得疏远。还记得你去年最后一次和我打电话，一开口就是哭腔，确实把我吓到了。后面听了你的情况，我最大的感受是心疼。心疼你说男方在从医生那里知道你眼睛的情况后，变得犹豫；也心疼你分手后走不出来，哭着找我聊天。以至于我后面都得先强忍着压住声音的颤抖，再开口。写到这里，我其实犹豫了一下要不要提这些，但我觉得还是该让你知道，我当时真的很心疼你。
+    </p>
+
+    <p class="paragraph">
+        在我的印象中，你很少，甚至几乎没有在我面前表现出沉重情绪的时候。很多时候我记忆中的你，都会和高中时期在课堂上怼老师，或是在偶尔聚一次的饭桌上和渣狗打打闹闹的样子重合。原来一晃，时间已经过去这么久了，我们也不断被生活推向前。
+    </p>
+
+    <p class="paragraph">
+        高中很多精力都在学习上，到了大学，我们才开始慢慢聊得深入，聊人生，聊价值观，聊少女心事。也是在大学那会儿，我对你有了第一个认识。我现在还记得你说的那句话：“我想看别人是如何爱我的，来学习爱自己。”现在的你，开始爱自己了吗？我们认识这么久，我能隐约感受到，你应该是向往婚姻的。如果真的有那一天，我衷心地发自内心祝福你，也期望你的另一半能尽快出现在你身边。但我更期望，婚姻对你来说是感情走到深处后自然而然的一步，而不是为了完成婚姻本身。
+    </p>
+
+    <p class="paragraph">
+        我是一个在成为朋友之前，很被动的人。有一句话很对：“像我们这样的人，就需要入室抢劫般的友情。”我会记得和身边所有朋友第一次真正进入友情阶段的情景。不知道你还记不记得，当时高中你还坐在讲台旁边，我们组正要从最后一排搬到第一排，就坐在你后面。我还记得，当时我正在整理桌子，就听到你在前面对我说：“xxx！快来快来！”我当时更多是诧异，其次是有点小小的惊喜。在别人看来，我们都是英语好的人，但当事人们并没有交集。惊喜的点来源于，其实我一直很想和你搭上话，类似于班里的小透明会羡慕人气王一样。没想到你先向我搭话了。后面我们也经常讨论题目，慢慢地开始变得熟悉。
+    </p>
+
+    <p class="paragraph">
+        有些话当面很难说出口，只能借这封信来表达。有句话，是我从认识你到现在一直想对你说的，你真的很勇敢，我一直都很佩服你。虽然世界上没有真正的感同身受，但我当初左耳突聋的时候，勉强能体会到你的感受。我时不时会想，你这样一个开朗阳光的人，一路带着这样的困难走到今天，还能保持住现在的样子，我一直觉得你很了不起。
+    </p>
+
+    <p class="paragraph">
+        下次有机会，我们再去贵阳吃一次堕落街的清汤腊肉豆花火锅吧。最后，希望你在上海也能照顾好自己，用你的智慧和力量给自己幸福。这是作为一个相识多年的朋友，唯一的愿望。
+    </p>
+
+    <p class="paragraph">
+        2026年9月6日星期日
+        <br><br>
+        xxx写于成都
+    </p>
+
+</div>
+
+
+<!-- =========================
+     播放中：逐句显示
+========================== -->
+
+<div id="listeningLetter" class="listening-mode letter">
+</div>
+
+
+<!-- 音频 -->
+
+<audio id="audio" preload="metadata">
+    <source src="audio.mp3" type="audio/mpeg">
+    你的浏览器不支持音频播放。
+</audio>
+```
+
+</div>
+
 <script>
+
+/* =====================================================
+   获取元素
+===================================================== */
 
 const audio = document.getElementById("audio");
 
@@ -455,140 +385,84 @@ const currentTimeText = document.getElementById("currentTime");
 const durationText = document.getElementById("duration");
 
 const progress = document.getElementById("progress");
-const progressContainer = document.getElementById("progressContainer");
+const progressContainer =
+    document.getElementById("progressContainer");
 
-const fullLetter = document.getElementById("fullLetter");
-const listeningLetter = document.getElementById("listeningLetter");
+const fullLetter =
+    document.getElementById("fullLetter");
 
-const sentences = document.querySelectorAll(".listening-sentence");
+const listeningLetter =
+    document.getElementById("listeningLetter");
 
 
-/* =========================
-   时间格式
-========================= */
+/* =====================================================
+   最终信件
+   这里使用和上面完全相同的文字。
+===================================================== */
 
-function formatTime(seconds) {
+const paragraphs = [
 
-    if (isNaN(seconds)) {
-        return "0:00";
-    }
+`最近过得怎么样？我想，我们的见面太匆忙了，没来得及回忆过去，也没机会聊聊未来。所以，我把见面时想说的话写了下来。考虑到你读起来可能不太方便，所以最终应该会做成一个录音，扫描二维码就能打开的形式。希望你不要把它当成诈骗信息，给扔了。`,
 
-    const minutes = Math.floor(seconds / 60);
+`昨天突然梦到你了，这是我近几年第一次梦到熟悉的人，所以很想记录下来，并借此机会说一些心里话。在梦里我们是毕业后很久没见的状态，和现实中的我们一样。不知道现实里的你过得怎么样，生活是否顺利，有没有找到满意的工作，眼睛状况还好吗。但在梦里你过得并不好，因为咱俩一见面你就抱着我哭，像是要把积压在心里的委屈全都宣泄出来。在梦里你似乎是一个老师的角色，但教书的对象很调皮捣蛋，不服从管教，导致你每天的工作压力都很大。直到我醒来，都还觉得很恍惚，因为在梦里我见到你的第一句话就是“你最近还好吗？”，逼真得就像我会说的话。当然，我希望梦是反的，希望现实里的你过得还不错。`,
 
-    const remainingSeconds = Math.floor(seconds % 60)
-        .toString()
-        .padStart(2, "0");
+`回想起来，我们已经有快半年没有联系了，这半年也没有刷到你的朋友圈，无法了解你的现状。我甚至在想，你是不是把我删除或拉黑了。但无论是删除拉黑，还是不再联系，我都接受。翻看我们最后一次聊天，当时的我没有换位思考你的情况。你说现在的工作不稳定，我也说最近找了新工作，还在试用期，也不稳定。那个时候，我下意识地把我们的情况当成了同一种，却忘了你每天要面对的困难可能比我多得多。我忽略了你可能比普通人更难找到工作，也更难在工作中表现得和其他同事一致。你每天需要付出更多的精力和心血才能赶上别人。也正因如此，我们对风险的承担能力是不一样的。对未来，你会更谨慎，更小心。翻看之前的聊天，发现你也有在长假的时候计划回来。但可能都因为种种原因取消了。`,
 
-    return minutes + ":" + remainingSeconds;
+`毕业后，我们的聊天逐渐转变为生活，少了一些学生时代纯粹的乐趣。遗憾的是，我现在已经想不起来我们某次聚会聊了什么，脑子里关于学生时代的记忆在逐渐淡化。记得我们每次高中或大学见面，总是会有很多说不完的话。印象里我们最后一次见面是24年8月，当时我去贵阳治耳朵，你还在贵阳上班。我们去吃了新疆菜，聊了两个多小时，越聊越嗨，菜都凉了。后面我就回家休养，直到25年2月，我来了成都。你也去了上海。不知不觉我们已经两年多没见过面了。我在想，会不会是因为我们少了能见面深入聊天的机会，才会让我们之间的距离开始变得疏远。还记得你去年最后一次和我打电话，一开口就是哭腔，确实把我吓到了。后面听了你的情况，我最大的感受是心疼。心疼你说男方在从医生那里知道你眼睛的情况后，变得犹豫；也心疼你分手后走不出来，哭着找我聊天。以至于我后面都得先强忍着压住声音的颤抖，再开口。写到这里，我其实犹豫了一下要不要提这些，但我觉得还是该让你知道，我当时真的很心疼你。`,
+
+`在我的印象中，你很少，甚至几乎没有在我面前表现出沉重情绪的时候。很多时候我记忆中的你，都会和高中时期在课堂上怼老师，或是在偶尔聚一次的饭桌上和渣狗打打闹闹的样子重合。原来一晃，时间已经过去这么久了，我们也不断被生活推向前。`,
+
+`高中很多精力都在学习上，到了大学，我们才开始慢慢聊得深入，聊人生，聊价值观，聊少女心事。也是在大学那会儿，我对你有了第一个认识。我现在还记得你说的那句话：“我想看别人是如何爱我的，来学习爱自己。”现在的你，开始爱自己了吗？我们认识这么久，我能隐约感受到，你应该是向往婚姻的。如果真的有那一天，我衷心地发自内心祝福你，也期望你的另一半能尽快出现在你身边。但我更期望，婚姻对你来说是感情走到深处后自然而然的一步，而不是为了完成婚姻本身。`,
+
+`我是一个在成为朋友之前，很被动的人。有一句话很对：“像我们这样的人，就需要入室抢劫般的友情。”我会记得和身边所有朋友第一次真正进入友情阶段的情景。不知道你还记不记得，当时高中你还坐在讲台旁边，我们组正要从最后一排搬到第一排，就坐在你后面。我还记得，当时我正在整理桌子，就听到你在前面对我说：“xxx！快来快来！”我当时更多是诧异，其次是有点小小的惊喜。在别人看来，我们都是英语好的人，但当事人们并没有交集。惊喜的点来源于，其实我一直很想和你搭上话，类似于班里的小透明会羡慕人气王一样。没想到你先向我搭话了。后面我们也经常讨论题目，慢慢地开始变得熟悉。`,
+
+`有些话当面很难说出口，只能借这封信来表达。有句话，是我从认识你到现在一直想对你说的，你真的很勇敢，我一直都很佩服你。虽然世界上没有真正的感同身受，但我当初左耳突聋的时候，勉强能体会到你的感受。我时不时会想，你这样一个开朗阳光的人，一路带着这样的困难走到今天，还能保持住现在的样子，我一直觉得你很了不起。`,
+
+`下次有机会，我们再去贵阳吃一次堕落街的清汤腊肉豆花火锅吧。最后，希望你在上海也能照顾好自己，用你的智慧和力量给自己幸福。这是作为一个相识多年的朋友，唯一的愿望。`,
+
+`2026年9月6日星期日 xxx写于成都`
+
+];
+
+
+/* =====================================================
+   把段落自动拆成一句一句
+===================================================== */
+
+function splitIntoSentences(text) {
+
+    /*
+       按中文句号、问号、感叹号、
+       分号等自然停顿拆分。
+
+       保留标点。
+    */
+
+    return text.match(
+        /[^。！？；]+[。！？；]?/g
+    ) || [text];
 }
 
 
-/* =========================
-   音频加载完成
-========================= */
+/* =====================================================
+   生成逐句文字
+===================================================== */
 
-audio.addEventListener("loadedmetadata", function() {
+let sentenceTexts = [];
 
-    durationText.textContent =
-        formatTime(audio.duration);
+paragraphs.forEach(function(paragraph) {
 
-});
+    const pieces =
+        splitIntoSentences(paragraph);
 
+    pieces.forEach(function(piece) {
 
-/* =========================
-   播放 / 暂停
-========================= */
+        const text =
+            piece.trim();
 
-playButton.addEventListener("click", function() {
+        if (text.length > 0) {
 
-    if (audio.paused) {
-
-        audio.play();
-
-        fullLetter.style.display = "none";
-        listeningLetter.classList.add("active");
-
-    } else {
-
-        audio.pause();
-
-    }
-
-});
-
-
-/* =========================
-   播放状态
-========================= */
-
-audio.addEventListener("play", function() {
-
-    playIcon.textContent = "Ⅱ";
-    playIcon.classList.add("pause-icon");
-
-    playButton.setAttribute(
-        "aria-label",
-        "暂停录音"
-    );
-
-});
-
-
-audio.addEventListener("pause", function() {
-
-    playIcon.textContent = "▶";
-    playIcon.classList.remove("pause-icon");
-
-    playButton.setAttribute(
-        "aria-label",
-        "播放录音"
-    );
-
-});
-
-
-/* =========================
-   播放进度
-========================= */
-
-audio.addEventListener("timeupdate", function() {
-
-    const current = audio.currentTime;
-
-    const duration = audio.duration;
-
-    currentTimeText.textContent =
-        formatTime(current);
-
-    if (!isNaN(duration) && duration > 0) {
-
-        const percent =
-            (current / duration) * 100;
-
-        progress.style.width =
-            percent + "%";
-
-    }
-
-
-    /* =========================
-       控制逐句显示
-    ========================= */
-
-    sentences.forEach(function(sentence) {
-
-        const start =
-            parseFloat(sentence.dataset.start);
-
-        const end =
-            parseFloat(sentence.dataset.end);
-
-        if (
-            current >= start &&
-            current < end
-        ) {
-
-            sentence.style.display = "block";
+            sentenceTexts.push(text);
 
         }
 
@@ -597,9 +471,311 @@ audio.addEventListener("timeupdate", function() {
 });
 
 
-/* =========================
+/* =====================================================
+   为每句话建立 HTML
+===================================================== */
+
+sentenceTexts.forEach(function(text, index) {
+
+    const p =
+        document.createElement("p");
+
+    p.className =
+        "listening-sentence";
+
+    p.textContent =
+        text;
+
+    p.dataset.index =
+        index;
+
+    p.style.display =
+        "none";
+
+    listeningLetter.appendChild(p);
+
+});
+
+
+const sentences =
+    document.querySelectorAll(
+        ".listening-sentence"
+    );
+
+
+/* =====================================================
+   根据文字长度计算“相对播放时间”
+
+   这不是最终精确时间轴，
+   而是为了让第一版可以自动运行。
+
+   中文字符越多，
+   默认占用的播放时间越长。
+
+   标点会额外增加一点权重，
+   模拟自然停顿。
+===================================================== */
+
+let weights = [];
+
+sentenceTexts.forEach(function(text) {
+
+    let weight = 0;
+
+    for (const char of text) {
+
+        if ("，、".includes(char)) {
+
+            weight += 1.15;
+
+        } else if (
+            "。！？；".includes(char)
+        ) {
+
+            weight += 1.8;
+
+        } else if (
+            "：“”‘’".includes(char)
+        ) {
+
+            weight += 0.5;
+
+        } else {
+
+            weight += 1;
+
+        }
+
+    }
+
+    weights.push(weight);
+
+});
+
+
+let totalWeight =
+    weights.reduce(
+        (sum, value) => sum + value,
+        0
+    );
+
+
+/* =====================================================
+   时间格式
+===================================================== */
+
+function formatTime(seconds) {
+
+    if (
+        isNaN(seconds) ||
+        seconds < 0
+    ) {
+
+        return "0:00";
+
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+
+    return (
+        minutes +
+        ":" +
+        remainingSeconds
+    );
+
+}
+
+
+/* =====================================================
+   音频加载
+===================================================== */
+
+audio.addEventListener(
+    "loadedmetadata",
+    function() {
+
+        durationText.textContent =
+            formatTime(audio.duration);
+
+    }
+);
+
+
+/* =====================================================
+   播放 / 暂停
+===================================================== */
+
+playButton.addEventListener(
+    "click",
+    function() {
+
+        if (audio.paused) {
+
+            /*
+               第一次播放：
+               从完整信件切换到聆听模式。
+            */
+
+            fullLetter.style.display =
+                "none";
+
+            listeningLetter.classList.add(
+                "active"
+            );
+
+            audio.play();
+
+        } else {
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   播放状态
+===================================================== */
+
+audio.addEventListener(
+    "play",
+    function() {
+
+        playIcon.textContent = "Ⅱ";
+
+        playIcon.classList.add(
+            "pause-icon"
+        );
+
+        playButton.setAttribute(
+            "aria-label",
+            "暂停录音"
+        );
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    function() {
+
+        /*
+           如果不是播放结束，
+           暂停时保持当前已经出现的文字。
+        */
+
+        playIcon.textContent = "▶";
+
+        playIcon.classList.remove(
+            "pause-icon"
+        );
+
+        playButton.setAttribute(
+            "aria-label",
+            "播放录音"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   根据当前播放时间显示句子
+===================================================== */
+
+audio.addEventListener(
+    "timeupdate",
+    function() {
+
+        const current =
+            audio.currentTime;
+
+        const duration =
+            audio.duration;
+
+        currentTimeText.textContent =
+            formatTime(current);
+
+
+        /* 进度条 */
+
+        if (
+            !isNaN(duration) &&
+            duration > 0
+        ) {
+
+            const percent =
+                (current / duration) * 100;
+
+            progress.style.width =
+                percent + "%";
+
+        }
+
+
+        /*
+           根据总录音时间，
+           计算当前应该出现多少句话。
+        */
+
+        if (
+            !isNaN(duration) &&
+            duration > 0
+        ) {
+
+            let accumulated =
+                0;
+
+            for (
+                let i = 0;
+                i < weights.length;
+                i++
+            ) {
+
+                accumulated +=
+                    weights[i];
+
+                const sentenceTime =
+                    (
+                        accumulated /
+                        totalWeight
+                    ) * duration;
+
+                if (
+                    current >=
+                    sentenceTime -
+                    (
+                        weights[i] /
+                        totalWeight *
+                        duration
+                    )
+                ) {
+
+                    sentences[i].style.display =
+                        "block";
+
+                }
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    点击进度条跳转
-========================= */
+===================================================== */
 
 progressContainer.addEventListener(
     "click",
@@ -610,74 +786,80 @@ progressContainer.addEventListener(
         }
 
         const rect =
-            progressContainer.getBoundingClientRect();
+            progressContainer
+            .getBoundingClientRect();
 
         const clickPosition =
-            event.clientX - rect.left;
+            event.clientX -
+            rect.left;
 
         const percentage =
-            clickPosition / rect.width;
+            clickPosition /
+            rect.width;
 
         audio.currentTime =
-            percentage * audio.duration;
+            percentage *
+            audio.duration;
 
     }
 );
 
 
-/* =========================
-   音频播放结束
-========================= */
+/* =====================================================
+   播放结束
+===================================================== */
 
-audio.addEventListener("ended", function() {
+audio.addEventListener(
+    "ended",
+    function() {
 
-    /*
-       回到最开始的完整信件
-    */
+        /*
+           恢复完整信件
+        */
 
-    listeningLetter.classList.remove("active");
+        listeningLetter.classList.remove(
+            "active"
+        );
 
-    fullLetter.style.display = "block";
-
-
-    /*
-       把逐句模式重新隐藏，
-       这样下一次播放时会重新从第一句出现
-    */
-
-    sentences.forEach(function(sentence) {
-
-        sentence.style.display = "none";
-
-    });
+        fullLetter.style.display =
+            "block";
 
 
-    progress.style.width = "0%";
+        /*
+           清空逐句模式，
+           下一次播放重新开始。
+        */
 
-    currentTimeText.textContent = "0:00";
+        sentences.forEach(
+            function(sentence) {
 
-    playIcon.textContent = "▶";
+                sentence.style.display =
+                    "none";
 
-    playIcon.classList.remove("pause-icon");
-
-    playButton.setAttribute(
-        "aria-label",
-        "播放录音"
-    );
-
-});
+            }
+        );
 
 
-/* =========================
-   页面第一次加载时，
-   隐藏播放模式的所有句子
-========================= */
+        progress.style.width =
+            "0%";
 
-sentences.forEach(function(sentence) {
+        currentTimeText.textContent =
+            "0:00";
 
-    sentence.style.display = "none";
+        playIcon.textContent =
+            "▶";
 
-});
+        playIcon.classList.remove(
+            "pause-icon"
+        );
+
+        playButton.setAttribute(
+            "aria-label",
+            "播放录音"
+        );
+
+    }
+);
 
 </script>
 
