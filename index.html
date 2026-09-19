@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>给杨德贝的一封信</title>
 
@@ -13,7 +13,7 @@
     }
 
     html {
-        font-size: 18px;
+        scroll-behavior: smooth;
     }
 
     body {
@@ -27,7 +27,6 @@
             "PingFang SC",
             "Hiragino Sans GB",
             "Microsoft YaHei",
-            "Noto Sans SC",
             sans-serif;
     }
 
@@ -35,831 +34,825 @@
         width: 100%;
         max-width: 760px;
         margin: 0 auto;
-        padding: 46px 28px 80px;
+        padding: 42px 24px 80px;
     }
 
-    /* =========================
-       标题
-    ========================= */
+    /* ---------- 标题 ---------- */
 
     .title {
         text-align: center;
-        margin: 0 0 10px;
-        font-size: 32px;
+        font-size: 34px;
         font-weight: 600;
-        letter-spacing: 2px;
+        letter-spacing: 4px;
+        margin-bottom: 12px;
     }
 
     .subtitle {
         text-align: center;
-        font-size: 18px;
-        line-height: 1.8;
+        font-size: 19px;
+        line-height: 1.7;
         color: #666;
-        margin-bottom: 36px;
+        margin-bottom: 34px;
     }
 
-    /* =========================
-       播放器
-    ========================= */
+    /* ---------- 播放区域 ---------- */
 
     .player {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin-bottom: 42px;
     }
 
     .play-button {
-        width: 120px;
-        height: 120px;
+        width: 126px;
+        height: 126px;
         border-radius: 50%;
         border: none;
         background: #222;
-        color: #fff;
+        color: white;
+        font-size: 46px;
         cursor: pointer;
-
-        display: inline-flex;
-        align-items: center;
+        display: flex;
         justify-content: center;
-
-        font-size: 42px;
-
-        transition: transform 0.15s ease;
-    }
-
-    .play-button:hover {
-        transform: scale(1.04);
+        align-items: center;
+        padding-left: 6px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .play-button:active {
-        transform: scale(0.97);
-    }
-
-    .play-button:focus-visible {
-        outline: 4px solid #888;
-        outline-offset: 6px;
-    }
-
-    .play-icon {
-        margin-left: 7px;
-        margin-top: 2px;
-    }
-
-    .pause-icon {
-        margin-left: 0;
+        transform: scale(0.95);
     }
 
     .time {
         margin-top: 18px;
-        font-size: 18px;
-        color: #555;
+        font-size: 17px;
+        color: #666;
         letter-spacing: 1px;
     }
 
-    /* =========================
-       进度条
-    ========================= */
-
     .progress-container {
         width: 100%;
-        max-width: 620px;
-        height: 12px;
-        margin: 20px auto 0;
+        max-width: 520px;
+        height: 6px;
         background: #ddd8cf;
-        border-radius: 20px;
-        cursor: pointer;
+        border-radius: 10px;
+        margin-top: 18px;
         overflow: hidden;
     }
 
     .progress {
-        width: 0%;
         height: 100%;
-        background: #333;
-        border-radius: 20px;
+        width: 0%;
+        background: #222;
+        border-radius: 10px;
     }
-
-    /* =========================
-       分隔线
-    ========================= */
 
     .divider {
         width: 100%;
         height: 1px;
-        background: #d8d2c8;
+        background: #ddd8cf;
         margin-bottom: 42px;
     }
 
-    /* =========================
-       完整信件
-    ========================= */
+    /* ---------- 完整信件 ---------- */
 
-    .letter {
-        font-size: 28px;
-        line-height: 2.05;
-        letter-spacing: 1px;
-        font-weight: 400;
-    }
-
-    .paragraph {
-        margin: 0 0 34px;
-    }
-
-    /* =========================
-       聆听模式
-    ========================= */
-
-    .listening-mode {
-        display: none;
-    }
-
-    .listening-mode.active {
+    .full-letter {
         display: block;
     }
 
-    .listening-sentence {
-        font-size: 30px;
-        line-height: 2.1;
-        letter-spacing: 1px;
+    .full-letter p {
         margin: 0 0 30px;
-
-        animation: appear 0.35s ease;
+        font-size: 27px;
+        line-height: 2.05;
+        letter-spacing: 1.5px;
+        font-weight: 400;
     }
 
-    @keyframes appear {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .signature {
+        margin-top: 50px;
+        text-align: right;
+        font-size: 25px;
+        line-height: 2;
     }
 
-    /* =========================
-       手机端
-    ========================= */
+    /* ---------- 播放中的信件 ---------- */
+
+    .listening {
+        display: none;
+        padding-bottom: 100px;
+    }
+
+    .listening.active {
+        display: block;
+    }
+
+    .sentence {
+        font-size: 29px;
+        line-height: 2.05;
+        letter-spacing: 1.5px;
+        margin: 0 0 34px;
+        color: #222;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+            opacity 0.5s ease,
+            transform 0.5s ease;
+    }
+
+    .sentence.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* 当前刚出现的句子稍微突出 */
+    .sentence.current {
+        font-weight: 600;
+    }
+
+    /* ---------- 手机 ---------- */
 
     @media (max-width: 600px) {
 
         .page {
-            padding: 36px 24px 70px;
+            padding: 34px 22px 80px;
         }
 
         .title {
-            font-size: 30px;
+            font-size: 31px;
+            letter-spacing: 3px;
         }
 
         .subtitle {
             font-size: 18px;
-            margin-bottom: 32px;
+            margin-bottom: 30px;
         }
 
         .play-button {
-            width: 125px;
-            height: 125px;
+            width: 124px;
+            height: 124px;
             font-size: 44px;
         }
 
-        .time {
-            font-size: 18px;
+        .full-letter p {
+            font-size: 27px;
+            line-height: 2.08;
+            letter-spacing: 1.3px;
+            margin-bottom: 30px;
         }
 
-        .letter {
-            font-size: 30px;
-            line-height: 2.15;
-            letter-spacing: 1px;
-        }
-
-        .paragraph {
-            margin-bottom: 36px;
-        }
-
-        .listening-sentence {
-            font-size: 32px;
+        .sentence {
+            font-size: 28px;
             line-height: 2.1;
-            margin-bottom: 32px;
-        }
-    }
+            letter-spacing: 1.3px;
+            margin-bottom: 36px;
 
-    @media (prefers-reduced-motion: reduce) {
-        * {
-            animation: none !important;
-            transition: none !important;
+            /* 自动滚动时，让句子停在屏幕比较舒服的位置 */
+            scroll-margin-top: 28vh;
+            scroll-margin-bottom: 28vh;
+        }
+
+        .signature {
+            font-size: 25px;
         }
     }
 </style>
-
 </head>
 
 <body>
 
 <div class="page">
 
-```
-<!-- =========================
-     标题
-========================== -->
+    <div class="title">给杨德贝的一封信</div>
 
-<h1 class="title">给杨德贝的一封信</h1>
-
-<div class="subtitle">
-    有些话，我还是想亲口告诉你。
-</div>
-
-
-<!-- =========================
-     播放器
-========================== -->
-
-<div class="player">
-
-    <button
-        class="play-button"
-        id="playButton"
-        aria-label="播放录音"
-    >
-        <span id="playIcon" class="play-icon">▶</span>
-    </button>
-
-    <div class="time">
-        <span id="currentTime">0:00</span>
-        /
-        <span id="duration">0:00</span>
+    <div class="subtitle">
+        有些话，我还是想亲口告诉你。
     </div>
 
-    <div
-        class="progress-container"
-        id="progressContainer"
-        aria-label="音频播放进度"
-    >
-        <div class="progress" id="progress"></div>
+    <div class="player">
+
+        <button class="play-button" id="playButton" aria-label="播放录音">
+            ▶
+        </button>
+
+        <div class="time">
+            <span id="currentTime">0:00</span>
+            /
+            <span id="duration">6:17</span>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress" id="progress"></div>
+        </div>
+
     </div>
 
-</div>
+    <div class="divider"></div>
 
+    <!-- ==================== 完整信件 ==================== -->
 
-<div class="divider"></div>
+    <div class="full-letter" id="fullLetter">
 
+        <p>最近过得怎么样？现在还在上海吗？我想，我们的见面太匆忙了，没来得及回忆过去，也没机会聊聊未来。所以，我把见面时想说的话写了下来。考虑到你读起来可能不太方便，所以最终应该会做成一个录音，扫描二维码就能打开的形式。希望你不要把它当成诈骗信息，给扔了。</p>
 
-<!-- =========================
-     播放前：完整信件
-========================== -->
+        <p>昨天突然梦到你了，这是我近几年第一次梦到熟悉的人，所以很想记录下来，并借此机会说一些心里话。在梦里我们是毕业后很久没见的状态，和现实中的我们一样。不知道现实里的你过得怎么样，生活是否顺利，有没有找到满意的工作，眼睛状况还好吗。但在梦里你过得并不好，因为咱俩一见面你就抱着我哭，像是要把积压在心里的委屈全都宣泄出来。在梦里你似乎是一个老师的角色，但教书的对象很调皮捣蛋，不服从管教，导致你每天的工作压力都很大。直到我醒来，都还觉得很恍惚，因为在梦里我见到你的第一句话就是“你最近还好吗？”，逼真得就像我会说的话。当然，我希望梦是反的，希望现实里的你过得还不错。</p>
 
-<div id="fullLetter" class="letter">
+        <p>回想起来，我们已经有快半年没有联系了，这半年也没有刷到你的朋友圈，无法了解你的现状。我甚至在想，你是不是把我删除或拉黑了。但无论是删除拉黑，还是不再联系，我都接受。翻看我们最后一次聊天，当时的我没有换位思考你的情况。你说现在的工作不稳定，我也说最近找了新工作，还在试用期，也不稳定。那个时候，我下意识地把我们的情况当成了同一种，却忘了你每天要面对的困难可能比我多得多。我忽略了你可能比普通人更难找到工作，也更难在工作中表现得和其他同事一致。你每天需要付出更多的精力和心血才能赶上别人。也正因如此，我们对风险的承担能力是不一样的。对未来，你会更谨慎，更小心。翻看之前的聊天，发现你也有在长假的时候计划回来。但可能都因为种种原因取消了。</p>
 
-    <p class="paragraph">
-        最近过得怎么样？现在还在上海吗？我想，我们的见面太匆忙了，没来得及回忆过去，也没机会聊聊未来。所以，我把见面时想说的话写了下来。考虑到你读起来可能不太方便，所以最终应该会做成一个录音，扫描二维码就能打开的形式。希望你不要把它当成诈骗信息，给扔了。
-    </p>
+        <p>毕业后，我们的聊天逐渐转变为生活，少了一些学生时代纯粹的乐趣。遗憾的是，我现在已经想不起来我们某次聚会聊了什么，脑子里关于学生时代的记忆在逐渐淡化。记得我们每次高中或大学见面，总是会有很多说不完的话。印象里我们最后一次见面是24年8月，当时我去贵阳治耳朵，你还在贵阳上班。我们去吃了新疆菜，聊了两个多小时，越聊越嗨，菜都凉了。后面我就回家休养，直到25年2月，我来了成都。你也去了上海。不知不觉我们已经两年多没见过面了。我在想，会不会是因为我们少了能见面深入聊天的机会，才会让我们之间的距离开始变得疏远。还记得你去年最后一次和我打电话，一开口就是哭腔，确实把我吓到了。后面听了你的情况，我最大的感受是心疼。心疼你说男方在从医生那里知道你眼睛的情况后，变得犹豫；也心疼你分手后走不出来，哭着找我聊天。以至于我后面都得先强忍着压住声音的颤抖，再开口。写到这里，我其实犹豫了一下要不要提这些，但我觉得还是该让你知道，我当时真的很心疼你。</p>
 
-    <p class="paragraph">
-        昨天突然梦到你了，这是我近几年第一次梦到熟悉的人，所以很想记录下来，并借此机会说一些心里话。在梦里我们是毕业后很久没见的状态，和现实中的我们一样。不知道现实里的你过得怎么样，生活是否顺利，有没有找到满意的工作，眼睛状况还好吗。但在梦里你过得并不好，因为咱俩一见面你就抱着我哭，像是要把积压在心里的委屈全都宣泄出来。在梦里你似乎是一个老师的角色，但教书的对象很调皮捣蛋，不服从管教，导致你每天的工作压力都很大。直到我醒来，都还觉得很恍惚，因为在梦里我见到你的第一句话就是“你最近还好吗？”，逼真得就像我会说的话。当然，我希望梦是反的，希望现实里的你过得还不错。
-    </p>
+        <p>在我的印象中，你很少，甚至几乎没有在我面前表现出沉重情绪的时候。很多时候我记忆中的你，都会和高中时期在课堂上怼老师，或是在偶尔聚一次的饭桌上和渣狗打打闹闹的样子重合。原来一晃，时间已经过去这么久了，我们也不断被生活推向前。</p>
 
-    <p class="paragraph">
-        回想起来，我们已经有快半年没有联系了，这半年也没有刷到你的朋友圈，无法了解你的现状。我甚至在想，你是不是把我删除或拉黑了。但无论是删除拉黑，还是不再联系，我都接受。翻看我们最后一次聊天，当时的我没有换位思考你的情况。你说现在的工作不稳定，我也说最近找了新工作，还在试用期，也不稳定。那个时候，我下意识地把我们的情况当成了同一种，却忘了你每天要面对的困难可能比我多得多。我忽略了你可能比普通人更难找到工作，也更难在工作中表现得和其他同事一致。你每天需要付出更多的精力和心血才能赶上别人。也正因如此，我们对风险的承担能力是不一样的。对未来，你会更谨慎，更小心。翻看之前的聊天，发现你也有在长假的时候计划回来。但可能都因为种种原因取消了。
-    </p>
+        <p>高中很多精力都在学习上，到了大学，我们才开始慢慢聊得深入，聊人生，聊价值观，聊少女心事。也是在大学那会儿，我对你有了第一个认识。我现在还记得你说的那句话：“我想看别人是如何爱我的，来学习爱自己。”现在的你，开始爱自己了吗？我们认识这么久，我能隐约感受到，你应该是向往婚姻的。如果真的有那一天，我衷心地发自内心祝福你，也期望你的另一半能尽快出现在你身边。但我更期望，婚姻对你来说是感情走到深处后自然而然的一步，而不是为了完成婚姻本身。</p>
 
-    <p class="paragraph">
-        毕业后，我们的聊天逐渐转变为生活，少了一些学生时代纯粹的乐趣。遗憾的是，我现在已经想不起来我们某次聚会聊了什么，脑子里关于学生时代的记忆在逐渐淡化。记得我们每次高中或大学见面，总是会有很多说不完的话。印象里我们最后一次见面是24年8月，当时我去贵阳治耳朵，你还在贵阳上班。我们去吃了新疆菜，聊了两个多小时，越聊越嗨，菜都凉了。后面我就回家休养，直到25年2月，我来了成都。你也去了上海。不知不觉我们已经两年多没见过面了。我在想，会不会是因为我们少了能见面深入聊天的机会，才会让我们之间的距离开始变得疏远。还记得你去年最后一次和我打电话，一开口就是哭腔，确实把我吓到了。后面听了你的情况，我最大的感受是心疼。心疼你说男方在从医生那里知道你眼睛的情况后，变得犹豫；也心疼你分手后走不出来，哭着找我聊天。以至于我后面都得先强忍着压住声音的颤抖，再开口。写到这里，我其实犹豫了一下要不要提这些，但我觉得还是该让你知道，我当时真的很心疼你。
-    </p>
+        <p>我是一个在成为朋友之前，很被动的人。有一句话很对：“像我们这样的人，就需要入室抢劫般的友情。”我会记得和身边所有朋友第一次真正进入友情阶段的情景。不知道你还记不记得，当时高中你还坐在讲台旁边，我们组正要从最后一排搬到第一排，就坐在你后面。我还记得，当时我正在整理桌子，就听到你在前面对我说：“xxx！快来快来！”我当时更多是诧异，其次是有点小小的惊喜。在别人看来，我们都是英语好的人，但当事人们并没有交集。惊喜的点来源于，其实我一直很想和你搭上话，类似于班里的小透明会羡慕人气王一样。没想到你先向我搭话了。后面我们也经常讨论题目，慢慢地开始变得熟悉。</p>
 
-    <p class="paragraph">
-        在我的印象中，你很少，甚至几乎没有在我面前表现出沉重情绪的时候。很多时候我记忆中的你，都会和高中时期在课堂上怼老师，或是在偶尔聚一次的饭桌上和渣狗打打闹闹的样子重合。原来一晃，时间已经过去这么久了，我们也不断被生活推向前。
-    </p>
+        <p>有些话当面很难说出口，只能借这封信来表达。有句话，是我从认识你到现在一直想对你说的，你真的很勇敢，我一直都很佩服你。虽然世界上没有真正的感同身受，但我当初左耳突聋的时候，勉强能体会到你的感受。我时不时会想，你这样一个开朗阳光的人，一路带着这样的困难走到今天，还能保持住现在的样子，我一直觉得你很了不起。</p>
 
-    <p class="paragraph">
-        高中很多精力都在学习上，到了大学，我们才开始慢慢聊得深入，聊人生，聊价值观，聊少女心事。也是在大学那会儿，我对你有了第一个认识。我现在还记得你说的那句话：“我想看别人是如何爱我的，来学习爱自己。”现在的你，开始爱自己了吗？我们认识这么久，我能隐约感受到，你应该是向往婚姻的。如果真的有那一天，我衷心地发自内心祝福你，也期望你的另一半能尽快出现在你身边。但我更期望，婚姻对你来说是感情走到深处后自然而然的一步，而不是为了完成婚姻本身。
-    </p>
+        <p>下次有机会，我们再去贵阳吃一次堕落街的清汤腊肉豆花火锅吧。最后，希望你在上海也能照顾好自己，用你的智慧和力量给自己幸福。这是作为一个相识多年的朋友，唯一的愿望。</p>
 
-    <p class="paragraph">
-        我是一个在成为朋友之前，很被动的人。有一句话很对：“像我们这样的人，就需要入室抢劫般的友情。”我会记得和身边所有朋友第一次真正进入友情阶段的情景。不知道你还记不记得，当时高中你还坐在讲台旁边，我们组正要从最后一排搬到第一排，就坐在你后面。我还记得，当时我正在整理桌子，就听到你在前面对我说：“xxx！快来快来！”我当时更多是诧异，其次是有点小小的惊喜。在别人看来，我们都是英语好的人，但当事人们并没有交集。惊喜的点来源于，其实我一直很想和你搭上话，类似于班里的小透明会羡慕人气王一样。没想到你先向我搭话了。后面我们也经常讨论题目，慢慢地开始变得熟悉。
-    </p>
+        <div class="signature">
+            2026年9月6日星期日<br>
+            黄瑜锦写于成都
+        </div>
 
-    <p class="paragraph">
-        有些话当面很难说出口，只能借这封信来表达。有句话，是我从认识你到现在一直想对你说的，你真的很勇敢，我一直都很佩服你。虽然世界上没有真正的感同身受，但我当初左耳突聋的时候，勉强能体会到你的感受。我时不时会想，你这样一个开朗阳光的人，一路带着这样的困难走到今天，还能保持住现在的样子，我一直觉得你很了不起。
-    </p>
+    </div>
 
-    <p class="paragraph">
-        下次有机会，我们再去贵阳吃一次堕落街的清汤腊肉豆花火锅吧。最后，希望你在上海也能照顾好自己，用你的智慧和力量给自己幸福。这是作为一个相识多年的朋友，唯一的愿望。
-    </p>
+    <!-- ==================== 播放中的信件 ==================== -->
 
-    <p class="paragraph">
-        2026年9月6日星期日
-        <br><br>
-        xxx写于成都
-    </p>
+    <div class="listening" id="listening"></div>
 
 </div>
-
-
-<!-- =========================
-     播放中：逐句显示
-========================== -->
-
-<div id="listeningLetter" class="listening-mode letter">
-</div>
-
-
-<!-- 音频 -->
 
 <audio id="audio" preload="metadata">
     <source src="audio.mp3" type="audio/mpeg">
-    你的浏览器不支持音频播放。
 </audio>
-```
-
-</div>
 
 <script>
 
-/* =====================================================
-   获取元素
-===================================================== */
+/* =========================================================
+   1. 读取完整信件，并自动拆成适合手机阅读的句子
+   ========================================================= */
+
+const paragraphs = Array.from(
+    document.querySelectorAll(".full-letter p")
+);
+
+const listening = document.getElementById("listening");
+
+let sentences = [];
+
+/*
+ * 中文句子拆分：
+ * 先按“。” “？” “！” “；”等自然停顿拆分。
+ * 太长的句子再按逗号拆开。
+ */
+
+paragraphs.forEach((paragraph, paragraphIndex) => {
+
+    const text = paragraph.textContent.trim();
+
+    let parts = text.split(/(?<=[。！？；])/);
+
+    let finalParts = [];
+
+    parts.forEach(part => {
+
+        part = part.trim();
+
+        if (!part) return;
+
+        /*
+         * 太长的句子进一步拆开。
+         */
+        if (part.length > 42) {
+
+            const commaParts = part.split(/(?<=[，、])/);
+
+            let buffer = "";
+
+            commaParts.forEach(item => {
+
+                if ((buffer + item).length > 30 && buffer) {
+                    finalParts.push(buffer);
+                    buffer = "";
+                }
+
+                buffer += item;
+            });
+
+            if (buffer) {
+                finalParts.push(buffer);
+            }
+
+        } else {
+            finalParts.push(part);
+        }
+    });
+
+    finalParts.forEach(text => {
+        sentences.push({
+            text,
+            paragraph: paragraphIndex
+        });
+    });
+});
+
+
+/* =========================================================
+   2. 创建播放中的句子
+   ========================================================= */
+
+sentences.forEach((item, index) => {
+
+    const el = document.createElement("div");
+
+    el.className = "sentence";
+
+    el.textContent = item.text;
+
+    el.dataset.index = index;
+
+    listening.appendChild(el);
+
+    item.element = el;
+});
+
+
+/* =========================================================
+   3. 根据文字长度建立播放时间轴
+   ========================================================= */
 
 const audio = document.getElementById("audio");
 
-const playButton = document.getElementById("playButton");
-const playIcon = document.getElementById("playIcon");
+let timeline = [];
 
-const currentTimeText = document.getElementById("currentTime");
-const durationText = document.getElementById("duration");
+function buildTimeline() {
 
-const progress = document.getElementById("progress");
-const progressContainer =
-    document.getElementById("progressContainer");
+    const duration = audio.duration;
+
+    if (!duration || !isFinite(duration)) return;
+
+    /*
+     * 中文实际朗读速度并不完全等于文字长度，
+     * 所以这里给每句话加入一个基础停留时间，
+     * 再按照字符数分配剩余时间。
+     */
+
+    const baseTime = 0.65;
+
+    const weights = sentences.map(sentence => {
+
+        const length = sentence.text.length;
+
+        return Math.pow(length, 0.92);
+    });
+
+    const totalWeight =
+        weights.reduce((a, b) => a + b, 0);
+
+    const fixedTime =
+        baseTime * sentences.length;
+
+    const flexibleTime =
+        Math.max(duration - fixedTime, 0);
+
+    let current = 0;
+
+    timeline = sentences.map((sentence, index) => {
+
+        const time =
+            baseTime +
+            flexibleTime *
+            (weights[index] / totalWeight);
+
+        const start = current;
+
+        const end = current + time;
+
+        current = end;
+
+        return {
+            start,
+            end
+        };
+    });
+}
+
+
+/* =========================================================
+   4. 播放按钮
+   ========================================================= */
+
+const playButton =
+    document.getElementById("playButton");
 
 const fullLetter =
     document.getElementById("fullLetter");
 
-const listeningLetter =
-    document.getElementById("listeningLetter");
+let hasStarted = false;
 
+playButton.addEventListener("click", async () => {
 
-/* =====================================================
-   最终信件
-   这里使用和上面完全相同的文字。
-===================================================== */
+    if (audio.paused) {
 
-const paragraphs = [
+        /*
+         * 第一次播放：
+         * 完整信件 → 逐句播放模式
+         */
 
-`最近过得怎么样？现在还在上海吗？我想，我们的见面太匆忙了，没来得及回忆过去，也没机会聊聊未来。所以，我把见面时想说的话写了下来。考虑到你读起来可能不太方便，所以最终应该会做成一个录音，扫描二维码就能打开的形式。希望你不要把它当成诈骗信息，给扔了。`,
+        if (!hasStarted) {
 
-`昨天突然梦到你了，这是我近几年第一次梦到熟悉的人，所以很想记录下来，并借此机会说一些心里话。在梦里我们是毕业后很久没见的状态，和现实中的我们一样。不知道现实里的你过得怎么样，生活是否顺利，有没有找到满意的工作，眼睛状况还好吗。但在梦里你过得并不好，因为咱俩一见面你就抱着我哭，像是要把积压在心里的委屈全都宣泄出来。在梦里你似乎是一个老师的角色，但教书的对象很调皮捣蛋，不服从管教，导致你每天的工作压力都很大。直到我醒来，都还觉得很恍惚，因为在梦里我见到你的第一句话就是“你最近还好吗？”，逼真得就像我会说的话。当然，我希望梦是反的，希望现实里的你过得还不错。`,
+            hasStarted = true;
 
-`回想起来，我们已经有快半年没有联系了，这半年也没有刷到你的朋友圈，无法了解你的现状。我甚至在想，你是不是把我删除或拉黑了。但无论是删除拉黑，还是不再联系，我都接受。翻看我们最后一次聊天，当时的我没有换位思考你的情况。你说现在的工作不稳定，我也说最近找了新工作，还在试用期，也不稳定。那个时候，我下意识地把我们的情况当成了同一种，却忘了你每天要面对的困难可能比我多得多。我忽略了你可能比普通人更难找到工作，也更难在工作中表现得和其他同事一致。你每天需要付出更多的精力和心血才能赶上别人。也正因如此，我们对风险的承担能力是不一样的。对未来，你会更谨慎，更小心。翻看之前的聊天，发现你也有在长假的时候计划回来。但可能都因为种种原因取消了。`,
+            fullLetter.style.display = "none";
 
-`毕业后，我们的聊天逐渐转变为生活，少了一些学生时代纯粹的乐趣。遗憾的是，我现在已经想不起来我们某次聚会聊了什么，脑子里关于学生时代的记忆在逐渐淡化。记得我们每次高中或大学见面，总是会有很多说不完的话。印象里我们最后一次见面是24年8月，当时我去贵阳治耳朵，你还在贵阳上班。我们去吃了新疆菜，聊了两个多小时，越聊越嗨，菜都凉了。后面我就回家休养，直到25年2月，我来了成都。你也去了上海。不知不觉我们已经两年多没见过面了。我在想，会不会是因为我们少了能见面深入聊天的机会，才会让我们之间的距离开始变得疏远。还记得你去年最后一次和我打电话，一开口就是哭腔，确实把我吓到了。后面听了你的情况，我最大的感受是心疼。心疼你说男方在从医生那里知道你眼睛的情况后，变得犹豫；也心疼你分手后走不出来，哭着找我聊天。以至于我后面都得先强忍着压住声音的颤抖，再开口。写到这里，我其实犹豫了一下要不要提这些，但我觉得还是该让你知道，我当时真的很心疼你。`,
+            listening.classList.add("active");
 
-`在我的印象中，你很少，甚至几乎没有在我面前表现出沉重情绪的时候。很多时候我记忆中的你，都会和高中时期在课堂上怼老师，或是在偶尔聚一次的饭桌上和渣狗打打闹闹的样子重合。原来一晃，时间已经过去这么久了，我们也不断被生活推向前。`,
-
-`高中很多精力都在学习上，到了大学，我们才开始慢慢聊得深入，聊人生，聊价值观，聊少女心事。也是在大学那会儿，我对你有了第一个认识。我现在还记得你说的那句话：“我想看别人是如何爱我的，来学习爱自己。”现在的你，开始爱自己了吗？我们认识这么久，我能隐约感受到，你应该是向往婚姻的。如果真的有那一天，我衷心地发自内心祝福你，也期望你的另一半能尽快出现在你身边。但我更期望，婚姻对你来说是感情走到深处后自然而然的一步，而不是为了完成婚姻本身。`,
-
-`我是一个在成为朋友之前，很被动的人。有一句话很对：“像我们这样的人，就需要入室抢劫般的友情。”我会记得和身边所有朋友第一次真正进入友情阶段的情景。不知道你还记不记得，当时高中你还坐在讲台旁边，我们组正要从最后一排搬到第一排，就坐在你后面。我还记得，当时我正在整理桌子，就听到你在前面对我说：“xxx！快来快来！”我当时更多是诧异，其次是有点小小的惊喜。在别人看来，我们都是英语好的人，但当事人们并没有交集。惊喜的点来源于，其实我一直很想和你搭上话，类似于班里的小透明会羡慕人气王一样。没想到你先向我搭话了。后面我们也经常讨论题目，慢慢地开始变得熟悉。`,
-
-`有些话当面很难说出口，只能借这封信来表达。有句话，是我从认识你到现在一直想对你说的，你真的很勇敢，我一直都很佩服你。虽然世界上没有真正的感同身受，但我当初左耳突聋的时候，勉强能体会到你的感受。我时不时会想，你这样一个开朗阳光的人，一路带着这样的困难走到今天，还能保持住现在的样子，我一直觉得你很了不起。`,
-
-`下次有机会，我们再去贵阳吃一次堕落街的清汤腊肉豆花火锅吧。最后，希望你在上海也能照顾好自己，用你的智慧和力量给自己幸福。这是作为一个相识多年的朋友，唯一的愿望。`,
-
-`2026年9月6日星期日 xxx写于成都`
-
-];
-
-
-/* =====================================================
-   把段落自动拆成一句一句
-===================================================== */
-
-function splitIntoSentences(text) {
-
-    /*
-       按中文句号、问号、感叹号、
-       分号等自然停顿拆分。
-
-       保留标点。
-    */
-
-    return text.match(
-        /[^。！？；]+[。！？；]?/g
-    ) || [text];
-}
-
-
-/* =====================================================
-   生成逐句文字
-===================================================== */
-
-let sentenceTexts = [];
-
-paragraphs.forEach(function(paragraph) {
-
-    const pieces =
-        splitIntoSentences(paragraph);
-
-    pieces.forEach(function(piece) {
-
-        const text =
-            piece.trim();
-
-        if (text.length > 0) {
-
-            sentenceTexts.push(text);
-
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         }
 
-    });
-
-});
-
-
-/* =====================================================
-   为每句话建立 HTML
-===================================================== */
-
-sentenceTexts.forEach(function(text, index) {
-
-    const p =
-        document.createElement("p");
-
-    p.className =
-        "listening-sentence";
-
-    p.textContent =
-        text;
-
-    p.dataset.index =
-        index;
-
-    p.style.display =
-        "none";
-
-    listeningLetter.appendChild(p);
-
-});
-
-
-const sentences =
-    document.querySelectorAll(
-        ".listening-sentence"
-    );
-
-
-/* =====================================================
-   根据文字长度计算“相对播放时间”
-
-   这不是最终精确时间轴，
-   而是为了让第一版可以自动运行。
-
-   中文字符越多，
-   默认占用的播放时间越长。
-
-   标点会额外增加一点权重，
-   模拟自然停顿。
-===================================================== */
-
-let weights = [];
-
-sentenceTexts.forEach(function(text) {
-
-    let weight = 0;
-
-    for (const char of text) {
-
-        if ("，、".includes(char)) {
-
-            weight += 1.15;
-
-        } else if (
-            "。！？；".includes(char)
-        ) {
-
-            weight += 1.8;
-
-        } else if (
-            "：“”‘’".includes(char)
-        ) {
-
-            weight += 0.5;
-
-        } else {
-
-            weight += 1;
-
+        try {
+            await audio.play();
+        } catch (error) {
+            console.log(error);
         }
 
+    } else {
+
+        audio.pause();
     }
-
-    weights.push(weight);
-
 });
 
 
-let totalWeight =
-    weights.reduce(
-        (sum, value) => sum + value,
-        0
-    );
+/* =========================================================
+   5. 播放 / 暂停按钮图标
+   ========================================================= */
+
+audio.addEventListener("play", () => {
+    playButton.textContent = "Ⅱ";
+});
+
+audio.addEventListener("pause", () => {
+    playButton.textContent = "▶";
+});
 
 
-/* =====================================================
-   时间格式
-===================================================== */
+/* =========================================================
+   6. 时间显示
+   ========================================================= */
+
+const currentTime =
+    document.getElementById("currentTime");
+
+const durationDisplay =
+    document.getElementById("duration");
+
+const progress =
+    document.getElementById("progress");
 
 function formatTime(seconds) {
 
-    if (
-        isNaN(seconds) ||
-        seconds < 0
-    ) {
-
-        return "0:00";
-
-    }
+    if (!isFinite(seconds)) return "0:00";
 
     const minutes =
         Math.floor(seconds / 60);
 
-    const remainingSeconds =
+    const secondsPart =
         Math.floor(seconds % 60)
-        .toString()
-        .padStart(2, "0");
+            .toString()
+            .padStart(2, "0");
 
-    return (
-        minutes +
-        ":" +
-        remainingSeconds
-    );
+    return `${minutes}:${secondsPart}`;
+}
 
+audio.addEventListener("loadedmetadata", () => {
+
+    durationDisplay.textContent =
+        formatTime(audio.duration);
+
+    buildTimeline();
+});
+
+
+/* =========================================================
+   7. 判断当前应该出现哪一句
+   ========================================================= */
+
+let currentSentenceIndex = -1;
+
+function updateSentence() {
+
+    if (!timeline.length) return;
+
+    const time = audio.currentTime;
+
+    let index = 0;
+
+    for (let i = 0; i < timeline.length; i++) {
+
+        if (
+            time >= timeline[i].start &&
+            time < timeline[i].end
+        ) {
+            index = i;
+            break;
+        }
+
+        if (time >= timeline[i].end) {
+            index = i;
+        }
+    }
+
+    if (index !== currentSentenceIndex) {
+
+        currentSentenceIndex = index;
+
+        revealSentences(index);
+    }
 }
 
 
-/* =====================================================
-   音频加载
-===================================================== */
+/* =========================================================
+   8. 显示当前句子
+   ========================================================= */
 
-audio.addEventListener(
-    "loadedmetadata",
-    function() {
+let autoScrolling = false;
 
-        durationText.textContent =
-            formatTime(audio.duration);
+function revealSentences(index) {
 
+    sentences.forEach((sentence, i) => {
+
+        if (i <= index) {
+            sentence.element.classList.add("visible");
+        } else {
+            sentence.element.classList.remove("visible");
+        }
+
+        sentence.element.classList.remove("current");
+    });
+
+    const current =
+        sentences[index]?.element;
+
+    if (!current) return;
+
+    current.classList.add("current");
+
+    /*
+     * 如果用户没有主动往上/下滚动，
+     * 才进行自动跟随。
+     */
+
+    if (!userIsScrolling) {
+
+        autoScrolling = true;
+
+        current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest"
+        });
+
+        /*
+         * 给浏览器一点时间完成自动滚动。
+         */
+
+        setTimeout(() => {
+            autoScrolling = false;
+        }, 700);
     }
+}
+
+
+/* =========================================================
+   9. 用户手动滚动检测
+   ========================================================= */
+
+let userIsScrolling = false;
+
+let scrollTimer = null;
+
+window.addEventListener(
+    "touchstart",
+    () => {
+
+        /*
+         * 触摸屏幕后，
+         * 默认认为接下来可能是用户自己的滚动。
+         */
+
+        if (!autoScrolling) {
+            userIsScrolling = true;
+        }
+    },
+    { passive: true }
 );
 
+window.addEventListener(
+    "touchmove",
+    () => {
 
-/* =====================================================
-   播放 / 暂停
-===================================================== */
+        if (!autoScrolling) {
+            userIsScrolling = true;
+        }
 
-playButton.addEventListener(
-    "click",
-    function() {
+        clearTimeout(scrollTimer);
 
-        if (audio.paused) {
+        scrollTimer = setTimeout(() => {
 
             /*
-               第一次播放：
-               从完整信件切换到聆听模式。
-            */
+             * 用户停止操作一段时间后，
+             * 如果当前句子已经重新进入视野，
+             * 自动跟随可以恢复。
+             */
 
-            fullLetter.style.display =
-                "none";
+            const current =
+                sentences[currentSentenceIndex]?.element;
 
-            listeningLetter.classList.add(
-                "active"
-            );
+            if (!current) return;
 
-            audio.play();
+            const rect =
+                current.getBoundingClientRect();
 
-        } else {
+            const screenHeight =
+                window.innerHeight;
 
-            audio.pause();
+            const visible =
+                rect.top < screenHeight * 0.85 &&
+                rect.bottom > screenHeight * 0.15;
 
-        }
-
-    }
-);
-
-
-/* =====================================================
-   播放状态
-===================================================== */
-
-audio.addEventListener(
-    "play",
-    function() {
-
-        playIcon.textContent = "Ⅱ";
-
-        playIcon.classList.add(
-            "pause-icon"
-        );
-
-        playButton.setAttribute(
-            "aria-label",
-            "暂停录音"
-        );
-
-    }
-);
-
-
-audio.addEventListener(
-    "pause",
-    function() {
-
-        /*
-           如果不是播放结束，
-           暂停时保持当前已经出现的文字。
-        */
-
-        playIcon.textContent = "▶";
-
-        playIcon.classList.remove(
-            "pause-icon"
-        );
-
-        playButton.setAttribute(
-            "aria-label",
-            "播放录音"
-        );
-
-    }
-);
-
-
-/* =====================================================
-   根据当前播放时间显示句子
-===================================================== */
-
-audio.addEventListener(
-    "timeupdate",
-    function() {
-
-        const current =
-            audio.currentTime;
-
-        const duration =
-            audio.duration;
-
-        currentTimeText.textContent =
-            formatTime(current);
-
-
-        /* 进度条 */
-
-        if (
-            !isNaN(duration) &&
-            duration > 0
-        ) {
-
-            const percent =
-                (current / duration) * 100;
-
-            progress.style.width =
-                percent + "%";
-
-        }
-
-
-        /*
-           根据总录音时间，
-           计算当前应该出现多少句话。
-        */
-
-        if (
-            !isNaN(duration) &&
-            duration > 0
-        ) {
-
-            let accumulated =
-                0;
-
-            for (
-                let i = 0;
-                i < weights.length;
-                i++
-            ) {
-
-                accumulated +=
-                    weights[i];
-
-                const sentenceTime =
-                    (
-                        accumulated /
-                        totalWeight
-                    ) * duration;
-
-                if (
-                    current >=
-                    sentenceTime -
-                    (
-                        weights[i] /
-                        totalWeight *
-                        duration
-                    )
-                ) {
-
-                    sentences[i].style.display =
-                        "block";
-
-                }
-
+            if (visible) {
+                userIsScrolling = false;
             }
 
-        }
+        }, 900);
 
-    }
+    },
+    { passive: true }
 );
 
 
-/* =====================================================
-   点击进度条跳转
-===================================================== */
+/* =========================================================
+   10. 音频时间更新
+   ========================================================= */
 
-progressContainer.addEventListener(
-    "click",
-    function(event) {
+audio.addEventListener("timeupdate", () => {
 
-        if (!audio.duration) {
-            return;
-        }
+    const time = audio.currentTime;
+
+    currentTime.textContent =
+        formatTime(time);
+
+    if (audio.duration) {
+
+        progress.style.width =
+            `${(time / audio.duration) * 100}%`;
+    }
+
+    updateSentence();
+});
+
+
+/* =========================================================
+   11. 用户拖动 / 点击进度条
+   ========================================================= */
+
+document
+    .querySelector(".progress-container")
+    .addEventListener("click", (event) => {
+
+        if (!audio.duration) return;
 
         const rect =
-            progressContainer
-            .getBoundingClientRect();
+            event.currentTarget.getBoundingClientRect();
 
-        const clickPosition =
-            event.clientX -
-            rect.left;
-
-        const percentage =
-            clickPosition /
+        const ratio =
+            (event.clientX - rect.left) /
             rect.width;
 
         audio.currentTime =
-            percentage *
-            audio.duration;
+            ratio * audio.duration;
 
-    }
+        /*
+         * 手动调整播放位置后，
+         * 让自动跟随重新接管。
+         */
+
+        userIsScrolling = false;
+    });
+
+
+/* =========================================================
+   12. 拖动进度条时也支持手机触摸
+   ========================================================= */
+
+let progressDragging = false;
+
+const progressContainer =
+    document.querySelector(".progress-container");
+
+progressContainer.addEventListener(
+    "touchstart",
+    () => {
+        progressDragging = true;
+    },
+    { passive: true }
+);
+
+progressContainer.addEventListener(
+    "touchmove",
+    event => {
+
+        if (!progressDragging || !audio.duration)
+            return;
+
+        const touch =
+            event.touches[0];
+
+        const rect =
+            progressContainer.getBoundingClientRect();
+
+        let ratio =
+            (touch.clientX - rect.left) /
+            rect.width;
+
+        ratio =
+            Math.max(0, Math.min(1, ratio));
+
+        audio.currentTime =
+            ratio * audio.duration;
+
+    },
+    { passive: true }
+);
+
+progressContainer.addEventListener(
+    "touchend",
+    () => {
+        progressDragging = false;
+        userIsScrolling = false;
+    },
+    { passive: true }
 );
 
 
-/* =====================================================
-   播放结束
-===================================================== */
+/* =========================================================
+   13. 播放结束
+   ========================================================= */
 
-audio.addEventListener(
-    "ended",
-    function() {
+audio.addEventListener("ended", () => {
 
-        /*
-           恢复完整信件
-        */
+    playButton.textContent = "▶";
 
-        listeningLetter.classList.remove(
-            "active"
-        );
+    /*
+     * 播放模式结束
+     */
 
-        fullLetter.style.display =
-            "block";
+    listening.classList.remove("active");
+
+    fullLetter.style.display = "block";
+
+    /*
+     * 清空播放中的句子
+     */
+
+    sentences.forEach(sentence => {
+
+        sentence.element.classList.remove("visible");
+        sentence.element.classList.remove("current");
+    });
+
+    currentSentenceIndex = -1;
+
+    userIsScrolling = false;
+
+    /*
+     * 回到信件顶部
+     */
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
 
 
-        /*
-           清空逐句模式，
-           下一次播放重新开始。
-        */
+/* =========================================================
+   14. 如果用户拖动音频位置，
+       根据新的时间重新显示对应句子
+   ========================================================= */
 
-        sentences.forEach(
-            function(sentence) {
+audio.addEventListener("seeked", () => {
 
-                sentence.style.display =
-                    "none";
+    updateSentence();
 
-            }
-        );
+    userIsScrolling = false;
+});
 
-
-        progress.style.width =
-            "0%";
-
-        currentTimeText.textContent =
-            "0:00";
-
-        playIcon.textContent =
-            "▶";
-
-        playIcon.classList.remove(
-            "pause-icon"
-        );
-
-        playButton.setAttribute(
-            "aria-label",
-            "播放录音"
-        );
-
-    }
-);
 
 </script>
 
